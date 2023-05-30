@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.DigiNote" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/Blue_700</item>
+    </style>
+
+    <style name="Theme.CustomSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#FF5A3B91</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/notepad</item>
+<!--        <item name="android:windowSplashScreenBrandingImage">@drawable/brand_name</item>-->
+        <item name="postSplashScreenTheme">@style/Theme.DigiNote</item>
+
+    </style>
+
+</resources>
