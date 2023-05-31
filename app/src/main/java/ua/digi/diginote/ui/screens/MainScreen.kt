@@ -24,6 +24,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ua.digi.diginote.data.model.Note
@@ -45,7 +47,7 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = MainView
             if (notes.isEmpty()) {
                 EmptyList()
             } else {
-                NotesLazyColumn(notes, viewModel, itemIds)
+                NotesLazyColumn(notes, viewModel, itemIds, navController)
             }
         }
     }
@@ -81,7 +83,8 @@ fun FAB(onFabClick: () -> Unit) {
 fun NotesLazyColumn(
     notes: List<Note>,
     viewModel: MainViewModel,
-    itemIds: List<Long>
+    itemIds: List<Long>,
+    navController: NavController
 ) {
     val dialogOpen = remember { mutableStateOf(-1L) }
 
@@ -89,9 +92,12 @@ fun NotesLazyColumn(
     LazyColumn(state = state) {
         itemsIndexed(notes) { index, note ->
             NoteCard(
-                note = note, onClickDeleteItem = { dialogOpen.value = note.id },
+                note = note,
+                onClickDeleteItem = { dialogOpen.value = note.id },
+//                onClickUpdateItem = { navController.navigate(Screen.Note.route + "/${note.id}?editMode=true") },
+                onClickUpdateItem = { navController.navigate(Screen.Note.route + "/${note.id}") },
+                onClickExpandItem = { viewModel.onItemClicked(index.toLong()) },
                 expanded = itemIds.contains(index.toLong()),
-                onClickExpandItem = { viewModel.onItemClicked(index.toLong()) }
             )
         }
     }
@@ -140,10 +146,12 @@ fun ConfirmDeleteDialog(dialogOpen: MutableState<Long>, onConfirmClick: () -> Un
     )
 }
 
+//@Preview(showBackground = true)
 @Composable
 fun NoteCard(
     note: Note,
     onClickDeleteItem: () -> Unit,
+    onClickUpdateItem: () -> Unit,
     onClickExpandItem: () -> Unit,
     expanded: Boolean
 ) {
@@ -172,7 +180,7 @@ fun NoteCard(
                     modifier = Modifier.weight(1.0f)
                 )
                 Row {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = onClickUpdateItem) {
                         Icon(Icons.Default.Edit, contentDescription = "")
                     }
                     Spacer(modifier = Modifier.width(8.dp))

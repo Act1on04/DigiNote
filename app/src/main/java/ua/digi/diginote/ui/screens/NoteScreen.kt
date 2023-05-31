@@ -12,11 +12,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ua.digi.diginote.ui.screens.viewmodels.NoteViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun NoteScreen(navController: NavController, viewModel: NoteViewModel = NoteViewModel()) {
+fun NoteScreen(
+    navController: NavController,
+    viewModel: NoteViewModel = NoteViewModel(),
+//    editMode: Boolean = false, // Новое состояние для определения режима экрана
+) {
+    val noteId = rememberNavController().currentBackStackEntry?.arguments?.getString("noteId")
+    val editMode: Boolean = noteId != null
 
     Scaffold(topBar = { }) {
 
@@ -33,16 +40,22 @@ fun NoteScreen(navController: NavController, viewModel: NoteViewModel = NoteView
             NoteText(viewModel)
             Spacer(modifier = Modifier.weight(1.0f))
             Buttons(
+                onClearClick = { viewModel.clearNoteTextFields() },
                 onAddClick = {
-                    viewModel.addNote()
+                    if (editMode) {
+                        viewModel.updateNote(noteId)
+                    } else {
+                        viewModel.addNote()
+                    }
                     navController.navigateUp()
                 },
-                onClearClick = { viewModel.clearNoteTextFields() }
+                editMode = editMode // Передача значения режима экрана в функцию Buttons
             )
             Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
+
 
 @Composable
 fun ScreenTitle() {
@@ -87,25 +100,41 @@ fun NoteText(viewModel: NoteViewModel) {
 
 
 @Composable
-fun Buttons(onClearClick: () -> Unit, onAddClick: () -> Unit) {
+fun Buttons(
+    onClearClick: () -> Unit,
+    onAddClick: () -> Unit,
+    editMode: Boolean // Новый параметр для определения режима экрана
+) {
     Row {
-        Button(
-            onClick = onClearClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1.0f)
-                .padding(horizontal = 8.dp)
-        ) {
-            Text("Clear")
-        }
-        Button(
-            onClick = onAddClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1.0f)
-                .padding(horizontal = 8.dp)
-        ) {
-            Text("Add Note")
+        if (editMode) { // Если режим редактирования, отображаем только кнопку "Save Note"
+            Button(
+                onClick = onAddClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1.0f)
+                    .padding(horizontal = 8.dp)
+            ) {
+                Text("Save Note")
+            }
+        } else { // Если режим добавления, отображаем кнопки "Clear" и "Add Note"
+            Button(
+                onClick = onClearClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1.0f)
+                    .padding(horizontal = 8.dp)
+            ) {
+                Text("Clear")
+            }
+            Button(
+                onClick = onAddClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1.0f)
+                    .padding(horizontal = 8.dp)
+            ) {
+                Text("Add Note")
+            }
         }
     }
 }
