@@ -39,12 +39,12 @@ class NoteViewModel : ViewModel() {
     }
 
     fun updateNote(noteId: Long) {
-        val note = repository.getNoteById(noteId)
-        note.title = noteTitle.value
-        note.text = noteText.value
-        note.updated = Date()
 
         viewModelScope.launch(Dispatchers.IO) {
+            val note = repository.getNoteById(noteId)
+            note.title = noteTitle.value
+            note.text = noteText.value
+            note.updated = Date()
             repository.updateNote(note)
         }
     }
