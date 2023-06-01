@@ -21,8 +21,7 @@ fun NavSetup() {
             route = "${Screen.Note.route}/{${Screen.Note.argumentNoteId}}",
             arguments = listOf(navArgument(Screen.Note.argumentNoteId) { type = NavType.LongType })
         ) { backStackEntry ->
-            val arguments = requireNotNull(backStackEntry.arguments)
-            val noteId = arguments.getLong(Screen.Note.argumentNoteId)
+            val noteId = requireNotNull(backStackEntry.arguments).getLong(Screen.Note.argumentNoteId)
             NoteScreen(navController = navController, noteId)
         }
     }

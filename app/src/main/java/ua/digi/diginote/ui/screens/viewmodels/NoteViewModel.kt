@@ -18,6 +18,8 @@ class NoteViewModel : ViewModel() {
 
     val noteTitle = mutableStateOf("")
     val noteText = mutableStateOf("")
+    val noteCreated = mutableStateOf<Date?>(null)
+    val noteUpdated = mutableStateOf<Date?>(null)
 
     fun clearNoteTextFields() {
         noteTitle.value = ""
@@ -30,15 +32,12 @@ class NoteViewModel : ViewModel() {
                 val note = repository.getNoteById(noteId)
                 noteTitle.value = note.title
                 noteText.value = note.text
+                noteCreated.value = note.created
+                noteUpdated.value = note.updated
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                 }
             }
-
-
-            val note = repository.getNoteById(noteId)
-            noteTitle.value = note.title
-            noteText.value = note.text
         }
     }
 
@@ -58,7 +57,7 @@ class NoteViewModel : ViewModel() {
     }
 
     fun updateNote(noteId: Long) {
-
+        println(Date())
         viewModelScope.launch(Dispatchers.IO) {
             val note = repository.getNoteById(noteId)
             note.title = noteTitle.value
