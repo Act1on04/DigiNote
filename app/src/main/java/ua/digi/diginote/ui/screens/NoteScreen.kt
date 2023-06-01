@@ -29,7 +29,6 @@ fun NoteScreen(
     noteId: Long?,
 //    note: Note?,
     viewModel: NoteViewModel = NoteViewModel(),
-//    editMode: Boolean = false, // Новое состояние для определения режима экрана
 ) {
 //    val noteId = rememberNavController().currentBackStackEntry?.arguments?.getLong("noteId")
 //    println("---------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>> noteId")
@@ -68,7 +67,6 @@ fun NoteScreen(
     }
 }
 
-
 @SuppressLint("SimpleDateFormat")
 @Composable
 fun ScreenTitle(viewModel: NoteViewModel, editMode: Boolean) {
@@ -99,7 +97,6 @@ fun ScreenTitle(viewModel: NoteViewModel, editMode: Boolean) {
         Text(text = "Add Note", textAlign = TextAlign.Center, color = Blue700, style = style)
 
 }
-
 @Composable
 fun NoteTitle(viewModel: NoteViewModel) {
 
