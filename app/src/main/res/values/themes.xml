@@ -7,8 +7,8 @@
 
     <style name="Theme.CustomSplash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">#FF5A3B91</item>
-<!--        <item name="windowSplashScreenAnimatedIcon">@drawable/notepad</item>-->
-<!--        <item name="android:windowSplashScreenBrandingImage">@drawable/brand_name</item>-->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/notepad</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/brand_name</item>
         <item name="postSplashScreenTheme">@style/Theme.DigiNote</item>
 
     </style>
