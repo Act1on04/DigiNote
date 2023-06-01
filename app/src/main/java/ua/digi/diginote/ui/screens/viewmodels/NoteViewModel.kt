@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ua.digi.diginote.NoteApp
 import ua.digi.diginote.data.model.Note
 import java.util.*
@@ -21,6 +22,24 @@ class NoteViewModel : ViewModel() {
     fun clearNoteTextFields() {
         noteTitle.value = ""
         noteText.value = ""
+    }
+
+    fun fillNoteTextFields(noteId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val note = repository.getNoteById(noteId)
+                noteTitle.value = note.title
+                noteText.value = note.text
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                }
+            }
+
+
+            val note = repository.getNoteById(noteId)
+            noteTitle.value = note.title
+            noteText.value = note.text
+        }
     }
 
     fun addNote() {

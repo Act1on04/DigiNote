@@ -30,6 +30,7 @@ fun NoteScreen(
     println(noteId)
     val editMode: Boolean = noteId != null
 //    val NoteIdL = noteId?.toLong()
+    noteId?.let { viewModel.fillNoteTextFields(it) }
 
     Scaffold(topBar = { }) {
 
