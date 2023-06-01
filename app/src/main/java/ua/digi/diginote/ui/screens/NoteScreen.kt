@@ -13,17 +13,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import ua.digi.diginote.data.model.Note
 import ua.digi.diginote.ui.screens.viewmodels.NoteViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun NoteScreen(
     navController: NavController,
+    noteId: Long?,
+//    note: Note?,
     viewModel: NoteViewModel = NoteViewModel(),
 //    editMode: Boolean = false, // Новое состояние для определения режима экрана
 ) {
-    val noteId = rememberNavController().currentBackStackEntry?.arguments?.getString("noteId")
+//    val noteId = rememberNavController().currentBackStackEntry?.arguments?.getLong("noteId")
+    println("---------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>> noteId")
+    println(noteId)
     val editMode: Boolean = noteId != null
+//    val NoteIdL = noteId?.toLong()
 
     Scaffold(topBar = { }) {
 
@@ -43,7 +49,7 @@ fun NoteScreen(
                 onClearClick = { viewModel.clearNoteTextFields() },
                 onAddClick = {
                     if (editMode) {
-                        viewModel.updateNote(noteId)
+                        noteId?.let { it1 -> viewModel.updateNote(it1) }
                     } else {
                         viewModel.addNote()
                     }

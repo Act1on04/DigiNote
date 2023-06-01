@@ -96,6 +96,7 @@ fun NotesLazyColumn(
                 onClickDeleteItem = { dialogOpen.value = note.id },
 //                onClickUpdateItem = { navController.navigate(Screen.Note.route + "/${note.id}?editMode=true") },
                 onClickUpdateItem = { navController.navigate(Screen.Note.route + "/${note.id}") },
+//                onClickUpdateItem = { navController.navigate(Screen.Note.route, note) },
                 onClickExpandItem = { viewModel.onItemClicked(index.toLong()) },
                 expanded = itemIds.contains(index.toLong()),
             )

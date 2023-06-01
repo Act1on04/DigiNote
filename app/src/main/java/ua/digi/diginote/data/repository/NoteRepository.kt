@@ -13,6 +13,7 @@ class NoteRepository(private val noteDao: NoteDao) {
     }
 
     fun getNoteById(id: Long) = noteDao.getNoteById(id)
+
     fun deleteNoteById(value: Long) {
         noteDao.deleteNoteById(value)
     }
