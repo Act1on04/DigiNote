@@ -1,5 +1,7 @@
 package ua.digi.diginote.ui
 
+import android.annotation.SuppressLint
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,5 +24,11 @@ class MainActivity : ComponentActivity() {
                 NavSetup()
             }
         }
+    }
+
+    companion object {
+        @SuppressLint("SimpleDateFormat")
+        val sdf = SimpleDateFormat("EEE, MMM d, yyyy  HH:mm")
+//                SimpleDateFormat("dd.MM.yyyy HH:mm")
     }
 }

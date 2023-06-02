@@ -1,7 +1,6 @@
 package ua.digi.diginote.ui.screens
 
 import android.annotation.SuppressLint
-import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -11,12 +10,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import ua.digi.diginote.ui.MainActivity
 import ua.digi.diginote.ui.screens.viewmodels.NoteViewModel
 import ua.digi.diginote.ui.theme.Blue500
 import ua.digi.diginote.ui.theme.Blue700
@@ -82,14 +81,12 @@ fun ScreenTitle(viewModel: NoteViewModel, editMode: Boolean) {
     if (editMode) {
         Text(text = "Edit Note", textAlign = TextAlign.Center, color = Blue700, style = style)
         if (viewModel.noteCreated.value != null && viewModel.noteUpdated.value != null) {
-            val sdf = SimpleDateFormat("EEE, MMM d, yyyy  HH:mm")
-            //            SimpleDateFormat("dd.MM.yyyy HH:mm")
             Text(
-                text = "Created: " + sdf.format(viewModel.noteCreated.value), color = Blue500,
+                text = "Created: " + MainActivity.sdf.format(viewModel.noteCreated.value), color = Blue500,
                 textAlign = TextAlign.Left, style = MaterialTheme.typography.subtitle1
             )
             Text(
-                text = "Last updated: " + sdf.format(viewModel.noteUpdated.value), color = Blue500,
+                text = "Last updated: " + MainActivity.sdf.format(viewModel.noteUpdated.value), color = Blue500,
                 textAlign = TextAlign.Left, style = MaterialTheme.typography.subtitle1
             )
         }

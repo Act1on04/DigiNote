@@ -22,15 +22,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ua.digi.diginote.data.model.Note
+import ua.digi.diginote.ui.MainActivity
 import ua.digi.diginote.ui.screens.navigation.Screen
 import ua.digi.diginote.ui.screens.viewmodels.MainViewModel
+import ua.digi.diginote.ui.theme.Blue500
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -171,7 +172,49 @@ fun NoteCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.End
             ) {
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(2.dp))
+//                Text(
+//                    buildAnnotatedString {
+//                        withStyle( ParagraphStyle(textAlign = TextAlign.Left )) {
+//                            withStyle(SpanStyle(color = Blue500, fontSize = 14.sp, fontStyle = FontStyle.Italic)) {
+//                                append(MainActivity.sdf.format(note.created))
+//                            }
+//                        }
+//                        withStyle( ParagraphStyle(textAlign = TextAlign.Right )) {
+//                            withStyle(SpanStyle(color = Blue500, fontSize = 14.sp, fontStyle = FontStyle.Italic)) {
+//                                append(MainActivity.sdf.format(note.updated))
+//                            }
+//                        }
+//                    }
+//                )
+                Text(
+                    text = MainActivity.sdf.format(note.created),
+                    fontStyle = FontStyle.Italic,
+                    color = Blue500,
+                    style = MaterialTheme.typography.body2,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    softWrap = true,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.weight(1.0f)
+                )
+                Text(
+                    text = MainActivity.sdf.format(note.updated),
+                    fontStyle = FontStyle.Italic,
+                    color = Blue500,
+                    style = MaterialTheme.typography.body2,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    softWrap = true,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.weight(1.0f)
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+            ) {
+                Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = note.title,
                     style = MaterialTheme.typography.h5,
